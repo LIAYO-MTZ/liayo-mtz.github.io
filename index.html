@@ -119,8 +119,14 @@ function categories(){
 function renderFilters(){
   const box = document.getElementById('filters');
   box.innerHTML = categories().map(c =>
-    `<button class="filter ${c===activeCategory?'active':''}" onclick="setCategory(${JSON.stringify(c)})">${esc(c)}</button>`
+    `<button type="button" class="filter ${c===activeCategory?'active':''}" data-category="${esc(c)}">${esc(c)}</button>`
   ).join('');
+
+  box.onclick = function(event){
+    const button = event.target.closest('button[data-category]');
+    if (!button) return;
+    setCategory(button.dataset.category);
+  };
 }
 function setCategory(category){
   activeCategory = category;
