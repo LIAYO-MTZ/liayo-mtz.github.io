@@ -78,6 +78,9 @@ const firebaseConfig = {
  firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
+ db.settings({
+  experimentalAutoDetectLongPolling: true
+});
 const productsRef = db.collection("productos");
 const ADMIN_UID = "krHamH4NzqQY5Jqo01RwiarOvMg1";
 const CURRENCY = "CUP";
