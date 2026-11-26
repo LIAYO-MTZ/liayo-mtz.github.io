@@ -338,6 +338,7 @@ if (status) status.textContent = 'Documentos recibidos: ' + snapshot.size + ' | 
   await migrateLocalProductsIfNeeded(snapshot);
 }, error => {
   console.error(error);
+ document.getElementById('productsStatus').textContent = 'ERROR: ' + error.code + ' - ' + error.message;
   document.getElementById('products').innerHTML =
     '<div class="empty">No se pudo cargar el catálogo. Comprueba la conexión a Internet y las reglas de Firestore.</div>';
 });
