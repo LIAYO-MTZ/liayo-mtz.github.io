@@ -97,7 +97,8 @@ let migrationAttempted = false;
 let toastTimer = null;
 
 const money = n => new Intl.NumberFormat('es', {
-  style:'currency', currency:CURRENCY, maximumFractionDigits:2
+  minimumFractionDigits:0,
+  maximumFractionDigits:0
 }).format(Number(n)||0);
 
 function esc(value){
