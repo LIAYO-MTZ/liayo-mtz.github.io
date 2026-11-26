@@ -118,15 +118,20 @@ function categories(){
 }
 function renderFilters(){
   const box = document.getElementById('filters');
-  box.innerHTML = categories().map(c =>
-    `<button type="button" class="filter ${c===activeCategory?'active':''}" data-category="${esc(c)}">${esc(c)}</button>`
-  ).join('');
+  box.innerHTML = '';
 
-  box.onclick = function(event){
-    const button = event.target.closest('button[data-category]');
-    if (!button) return;
-    setCategory(button.dataset.category);
-  };
+  categories().forEach(category => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'filter' + (category === activeCategory ? ' active' : '');
+    button.textContent = category;
+
+    button.addEventListener('click', function(){
+      setCategory(category);
+    });
+
+    box.appendChild(button);
+  });
 }
 function setCategory(category){
   activeCategory = category;
