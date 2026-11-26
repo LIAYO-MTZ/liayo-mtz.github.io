@@ -325,8 +325,10 @@ async function migrateLocalProductsIfNeeded(snapshot){
 
 // Catálogo público: cualquier visitante puede leer, solo el UID administrador puede escribir.
 productsRef.onSnapshot(async snapshot => {
-  PRODUCTS = snapshot.docs
-    .filter(doc => doc.data().name && doc.data().category)
+  const status = document.getElementById('productsStatus');
+const validDocs = snapshot.docs.filter(doc => doc.data().name && doc.data().category);
+if (status) status.textContent = 'Documentos recibidos: ' + snapshot.size + ' | Productos válidos: ' + validDocs.length + ' | Proyecto: ' + firebase.app().options.projectId;
+ PRODUCTS = snapshot.docs
     .map(doc => ({id:doc.id, ...doc.data()}));
   renderFilters();
   renderProducts();
