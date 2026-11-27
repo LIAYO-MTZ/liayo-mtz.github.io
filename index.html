@@ -338,22 +338,54 @@ async function migrateLocalProductsIfNeeded(snapshot){
 }
 
 // Catálogo público: cualquier visitante puede leer, solo el UID administrador puede escribir.
-productsRef.onSnapshot(async snapshot => {
+// Catálogo público: lectura a través de Cloudflare.
+const WORKER_URL = "https://cool-wood-d0c8.yoandryh67.workers.dev/productos";
+
+async function loadProducts() {
   const status = document.getElementById('productsStatus');
-const validDocs = snapshot.docs.filter(doc => doc.data().name && doc.data().category);
-if (status) status.textContent = 'Documentos recibidos: ' + snapshot.size + ' | Productos válidos: ' + validDocs.length + ' | Proyecto: ' + firebase.app().options.projectId;
- PRODUCTS = snapshot.docs
-    .map(doc => ({id:doc.id, ...doc.data()}));
-  renderFilters();
-  renderProducts();
-  if (adminUnlocked) renderAdminProducts();
-  await migrateLocalProductsIfNeeded(snapshot);
-}, error => {
-  console.error(error);
- document.getElementById('productsStatus').textContent = 'ERROR: ' + error.code + ' - ' + error.message;
-  document.getElementById('products').innerHTML =
-    '<div class="empty">No se pudo cargar el catálogo. Comprueba la conexión a Internet y las reglas de Firestore.</div>';
-});
+
+  try {
+    if (status) status.textContent = 'Conectando con LIAYO...';
+
+    const response = await fetch(WORKER_URL, {
+      method: 'GET',
+      cache: 'no-store'
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error('Error HTTP ' + response.status);
+    }
+
+    if (!Array.isArray(data)) {
+      throw new Error('Respuesta incorrecta del catálogo');
+    }
+
+    PRODUCTS = data.filter(p => p && p.name && p.category);
+
+    renderFilters();
+    renderProducts();
+
+    if (adminUnlocked) renderAdminProducts();
+
+    if (status) {
+      status.textContent = 'Productos cargados: ' + PRODUCTS.length;
+    }
+
+  } catch (error) {
+    console.error('Carga del catálogo:', error);
+
+    if (status) {
+      status.textContent = 'Error al cargar: ' + error.message;
+    }
+
+    document.getElementById('products').innerHTML =
+      '<div class="empty">No se pudo cargar el catálogo. Comprueba la conexión.</div>';
+  }
+}
+
+loadProducts();
  document.getElementById('pImageFile').addEventListener('change', function(){
   const file = this.files && this.files[0];
   if (!file) return;
