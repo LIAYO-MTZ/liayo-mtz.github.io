@@ -50,7 +50,8 @@ footer{background:var(--navy);color:#dce0e6;margin-top:0;padding:34px 0}.foot{di
     <form class="admin-form" onsubmit="saveProduct(event)">
       <label class="field">Nombre del producto<input id="pName" required maxlength="90" placeholder="Ej. Panel solar 535 W"></label>
       <label class="field">Categoría<input id="pCategory" required maxlength="40" placeholder="Ej. Tecnología"></label>
-      <label class="field">Precio en CUP<input id="pPrice" required type="number" min="0" step="0.01" placeholder="0.00"></label>
+      <label class="field">Precio <input id="pPrice" required type="number" min="0" step="0.01" placeholder="0.00"></label>
+     <label class="field">Moneda<select id="pCurrency" required><option value="CUP">CUP</option><option value="USD">USD</option></select></label>
       <label class="field">Etiqueta (opcional)<input id="pTag" maxlength="25" placeholder="Nuevo / Oferta"></label>
       <label class="field wide">Fotografía del producto<div class="uploadbox"><input id="pImageFile" type="file" accept="image/*"><div class="hint">Selecciona una foto desde la galería. La imagen se comprime antes de guardarse.</div><img id="imagePreview" class="preview" alt="Vista previa de la foto"></div></label>
       <label class="field wide">Descripción<textarea id="pDescription" rows="2" maxlength="240" placeholder="Detalles del producto"></textarea></label>
