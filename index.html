@@ -165,7 +165,7 @@ function renderAdminProducts(){
   const box = document.getElementById('adminProducts');
   box.innerHTML = PRODUCTS.length ? PRODUCTS.map(p => `
     <div class="admin-product">
-      <div><b>${esc(p.name)}</b><small>${esc(p.category)} · ${money(p.price)} CUP</small></div>
+      <div><b>${esc(p.name)}</b><small>${esc(p.category)} · ${money(p.price)} ${esc(p.currency || "CUP")}</small></div>
       <div>
         <button onclick="editProduct('${esc(p.id)}')">Editar</button>
         <button onclick="deleteProduct('${esc(p.id)}')">Eliminar</button>
