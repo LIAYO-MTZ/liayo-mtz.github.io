@@ -155,7 +155,7 @@ function renderProducts(){
       <div class="details">
         <div class="category">${esc(p.category)}</div>
         <h3>${esc(p.name)}</h3>
-        <div class="price">${money(p.price)} CUP</div>
+        <div class="price">${money(p.price)} ${esc(p.currency || "CUP")}</div>
         <div class="muted">${esc(p.description||'')}</div>
       </div>
     </article>
