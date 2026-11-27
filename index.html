@@ -254,7 +254,9 @@ async function saveProduct(event){
     name: document.getElementById('pName').value.trim(),
     category: document.getElementById('pCategory').value.trim(),
     price: Number(document.getElementById('pPrice').value),
-    tag: document.getElementById('pTag').value.trim(),
+   document.getElementById('pCurrency').value = p.currency || "CUP";
+    currency: document.getElementById('pCurrency').value,
+   tag: document.getElementById('pTag').value.trim(),
     image: selectedImageData || (old ? old.image || '' : ''),
     description: document.getElementById('pDescription').value.trim(),
     updatedAt: firebase.firestore.FieldValue.serverTimestamp()
