@@ -465,6 +465,15 @@ document.getElementById('year').textContent = new Date().getFullYear();
 renderFilters();
 renderProducts();
 </script>
+ <script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/sw.js")
+      .then(() => console.log("LIAYO instalada correctamente"))
+      .catch(error => console.error("Error de instalación:", error));
+  });
+}
+ </script>
 </body>
 </html>
 
