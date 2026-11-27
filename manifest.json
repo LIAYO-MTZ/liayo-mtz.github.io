@@ -1,0 +1,19 @@
+{
+  "name": "LIAYO - Catálogo",
+  "short_name": "LIAYO",
+  "description": "Catálogo de productos LIAYO",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#101b2b",
+  "theme_color": "#101b2b",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
