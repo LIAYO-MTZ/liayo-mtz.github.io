@@ -274,7 +274,9 @@ async function saveProduct(event){
       await doc.set({...item, createdAt:firebase.firestore.FieldValue.serverTimestamp()});
     }
     resetProductForm();
+   await loadProducts();
     toast('Producto guardado en la nube.');
+   
   } catch (error) {
     console.error(error);
     toast('No se pudo guardar. Comprueba la conexión y las reglas de Firebase.');
@@ -305,6 +307,7 @@ async function deleteProduct(id){
   if (!p || !confirm(`¿Eliminar "${p.name}" del catálogo?`)) return;
   try {
     await productsRef.doc(String(id)).delete();
+   await loadProducts();
     toast('Producto eliminado.');
   } catch (error) {
     console.error(error);
